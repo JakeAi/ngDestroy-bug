@@ -2,13 +2,11 @@ import { NgModule } from '@angular/core'
 import { Routes } from '@angular/router'
 import { NativeScriptRouterModule } from '@nativescript/angular'
 
-import { ItemsComponent } from './item/items.component'
-import { ItemDetailComponent } from './item/item-detail.component'
-
 const routes: Routes = [
-  { path: '', redirectTo: '/items', pathMatch: 'full' },
-  { path: 'items', component: ItemsComponent },
-  { path: 'item/:id', component: ItemDetailComponent },
+  { path: '', redirectTo: '/cycle1', pathMatch: 'full' },
+  { path: 'cycle1', loadChildren: () => import('./components/cycle-one.component').then(m => m.CycleOneModule) },
+  { path: 'cycle2', loadChildren: () => import('./components/cycle-two.component').then(m => m.CycleTwoModule) },
+  { path: 'cycle3', loadChildren: () => import('./components/cycle-three.component').then(m => m.CycleThreeModule) },
 ]
 
 @NgModule({
