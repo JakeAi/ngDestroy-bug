@@ -1,11 +1,15 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { CommonModule } from '@angular/common';
+import { Component, NgModule, OnDestroy, OnInit } from '@angular/core';
+import { Routes } from '@angular/router';
+import { NativeScriptRouterModule } from '@nativescript/angular';
+import { AuthClaimsAgreementsGuard } from '../guards/auth-claims-agreements.guard';
 
 @Component({
-  selector: "cycle-one",
+  selector: 'cycle-one',
   template: `
     <Button
       text="Go to cycle two"
-      [nsRouterLink]="['../cycle2']"
+      [nsRouterLink]="['/cycle2/5']"
       [clearHistory]="true"
     ></Button>
   `,
@@ -15,28 +19,32 @@ export class CycleOneComponent implements OnInit, OnDestroy {
   constructor() {}
 
   ngOnInit(): void {
-    console.log("CYCLE_ONE Init");
+    console.log('CYCLE_ONE Init');
   }
 
   ngOnDestroy(): void {
-    console.log("CYCLE_ONE Destroyed");
+    console.log('CYCLE_ONE Destroyed');
   }
 }
 
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { NativeScriptRouterModule } from "@nativescript/angular";
+const routes: Routes = [
+  {
+    path: '',
+    canActivate: [AuthClaimsAgreementsGuard],
+    data: {},
+    children: [
+      { path: '', component: CycleOneComponent },
+      { path: ':id', component: CycleOneComponent },
+      { path: ':id/:recovery', component: CycleOneComponent },
+    ],
+  },
+];
 
 @NgModule({
   declarations: [CycleOneComponent],
   imports: [
     CommonModule,
-    NativeScriptRouterModule.forChild([
-      {
-        path: "",
-        component: CycleOneComponent,
-      },
-    ]),
+    NativeScriptRouterModule.forChild(routes),
   ],
 })
 export class CycleOneModule {}
