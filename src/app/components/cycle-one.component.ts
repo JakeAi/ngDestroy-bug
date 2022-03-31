@@ -9,7 +9,7 @@ import { AuthClaimsAgreementsGuard } from '../guards/auth-claims-agreements.guar
   template: `
     <Button
       text="Go to cycle two"
-      [nsRouterLink]="['../cycle2']"
+      [nsRouterLink]="['/cycle2/5']"
       [clearHistory]="true"
     ></Button>
   `,
